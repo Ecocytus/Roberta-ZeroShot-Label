@@ -1,15 +1,19 @@
 # Zero-shot Labelling with Roberta (RobertaForTokenZeroShotClassification)
 This Roberta Model provides zero-shot labeling, i.e. predicting token-wise labels with only sentence-level label.
 
+The model is a gradient-based approach, with **max-min pooling** to learn localized features and **additonal loss functions** from Rei and Søgaard (2018) to encourage token-level classification.
+
 ## Requirements
 * torch
 * transformers
 
 # Usage
 
-The input requirements are the same as [RobertaForSequenceClassification](https://huggingface.co/transformers/model_doc/roberta.html#robertaforsequenceclassification). (It supports **multilabel**!)
+The input requirements are the same as [RobertaForSequenceClassification](https://huggingface.co/transformers/model_doc/roberta.html#robertaforsequenceclassification), the model will only backpropagate the sentence-level loss, but the output will have both token-wise and sentence-wise label (i.e. token label in [RobertaForTokenClassification](https://huggingface.co/transformers/model_doc/roberta.html#robertafortokenclassification)). 
 
-The returned dictionary will contain both `logits` and `logit_mask` (the same as [RobertaForTokenClassification](https://huggingface.co/transformers/model_doc/roberta.html#robertafortokenclassification)).
+It supports **multilabel**!
+
+The returned dictionary will contain both `logits` and `logit_mask`.
 *   **`logits`**: Sentence level prediction, of shape (`batch_size`, `num_labels`).
 *   **`logit_mask`**: Token level prediction, of shape (`batch_size`, `sequence_length`, `num_labels`).
 
@@ -38,5 +42,5 @@ Compared to other zero-shot labeling models on FCE dataset.
 |                               | P      | R      | F1     |
 | LIME                          | 19.06  | 34.70  | 24.60  |
 | LSTM (Rei and Søgaard)        | 29.16  | 29.04  | 28.73  |
-| Transformer (Rei and Søgaard) | 20.76  | 85.36  | 33.31  |
+| Transformer (Bujel, Yannakoudakis, and Rei) | 20.76  | 85.36  | 33.31  |
 | Roberta Zero-Shot             | 25.47  | 63.16  | **36.30**  |
