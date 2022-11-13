@@ -1,6 +1,8 @@
 # Zero-shot (Multi-Label) Labelling with Roberta (RobertaForTokenZeroShotClassification)
 This Roberta Model provides zero-shot labeling, i.e. predicting token-wise labels with only the sentence-level label.
 
+![Example usage](inference.png)
+
 The model is a gradient-based approach, with **max-min pooling** to learn localized features and **additional  loss functions** from Rei and Søgaard (2018) to encourage token-level classification.
 
 ## Requirements
